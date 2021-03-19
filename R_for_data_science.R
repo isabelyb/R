@@ -396,4 +396,75 @@ ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista, show.legend =
 ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
   geom_point(aes(fill = traccion), shape = 21, color = "white", size = 2, stroke = 1)
 
+    # https://jrnold.github.io/r4ds-exercise-solutions/data-visualisation.html#exercise-3.6.6
+ggplot(millas, aes(x = cilindrada, y = autopista)) +
+  geom_point(size = 4, color = "white") +
+  geom_point(aes(color = traccion))
 
+
+#TRANSFORMACIONES ESTADÍSTICAS
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte))
+
+?geom_bar
+
+  #stat_count ees la estadística de geom_bar por defecto. Se pueden intercambiar
+
+ggplot(data = diamantes) +
+  stat_count(mapping = aes(x = corte))
+
+ #gráfico de proporciones, en lugar de recuento
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, y = stat(prop), group = 1))
+
+  #resaltar la transformación estadística
+
+ggplot(data = diamantes) +
+  stat_summary(
+    mapping = aes(x = corte, y = profundidad),
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
+
+# Lista completa de transformaciones estadísticas en ggplot
+
+?stat_bin
+
+#Ejercicios
+
+  #1
+
+?stat_summary
+?geom_pointrange
+
+ggplot(data = diamantes) +
+  geom_pointrange(
+    mapping = aes(x = corte, y = profundidad),
+    stat = "summary",
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
+
+
+  #2
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte))
+  
+ggplot(data = diamantes) +
+  geom_col(mapping = aes(x = corte, y = profundidad))
+  
+  #5 - No entendí muy bien
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, y = after_stat(prop), group = 1))
+           
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, fill = color, y = after_stat(prop)))
+
+ggplot(data = diamonds) + 
+  geom_bar(aes(x = cut, y = ..count.. / sum(..count..), fill = color))
