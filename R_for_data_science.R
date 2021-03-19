@@ -166,3 +166,234 @@ ggplot(data = millas) +
   geom_point(mapping = aes(x = cilindrada, y = autopista)) +
   facet_grid(traccion ~ .)
 
+#separar en facetas variables continuas
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista)) +
+  facet_wrap(~ cilindrada, nrow = 3)
+
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista)) +
+  facet_grid(cilindrada ~ .)
+#mala idea, se crearán tantos gráficos como datos, además no sirve para comparar
+
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = traccion, y = cilindros))+
+  facet_grid(traccion ~ cilindros)
+
+#OBJETOS GEOMÉTRICOS
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista))
+
+ggplot(data = millas) +
+  geom_smooth(mapping = aes(x = cilindrada, y = autopista))
+
+ggplot(data = millas) +
+  geom_smooth(mapping = aes(x = cilindrada, y = autopista, linetype = traccion))
+
+?geom_smooth
+
+ggplot(data = millas) +
+  geom_smooth(mapping = aes(x = cilindrada, y = autopista, group = traccion))
+
+ggplot(data = millas) +
+  geom_smooth(
+    mapping = aes(x = cilindrada, y = autopista, color = traccion),
+    show.legend = FALSE
+  )
+
+ggplot(data = millas) +
+  geom_smooth(
+    mapping = aes(x = cilindrada, y = autopista, color = traccion))
+
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista)) +
+  geom_smooth(mapping = aes(x = cilindrada, y = autopista))
+
+#Mapeo global
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point() +
+  geom_smooth()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point(mapping = aes(color = clase)) +
+  geom_smooth()
+
+#este código no me funcionó y no supe porqué
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point(mapping = aes(color = clase)) +
+  geom_smooth(data = filter(millas, clase == "subcompacto"), se = FALSE)
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_histogram()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_boxplot()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_line()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_abline()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_area()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_col()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_contour()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_contour_filled()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_count()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_crossbar()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_curve()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_density()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_density_2d()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_density_2d_filled()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_density2d()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_density2d_filled()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_errorbar()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_errorbarh()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_freqpoly()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_function()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_rug()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_rect()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_ribbon()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_rug()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_hex()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_hline()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_jitter()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_label()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_line()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_linerange()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_map()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_path()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_pointrange()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_polygon()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_qq()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_qq_line()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_quantile()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_segment()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_sf()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_sf_label()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_sf_text()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_smooth()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_spoke()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_step()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_text()
+
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_tile()
+
+
+#Gráficos del ejercicio 6
+
+#1   - se muestra el intervalo de confianza por defecto, para quitarlo --> se=FALSE
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point() +
+  geom_smooth(se=FALSE)
+
+#2
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista, line = traccion)) +
+  geom_point() +
+  geom_smooth(se=FALSE)
+
+#3
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista, color = traccion, show.legend = FALSE)) +
+  geom_point() + 
+  geom_smooth(se=FALSE, show.legend = FALSE)
+
+#4
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point(aes(color = traccion)) +
+  geom_smooth(se=FALSE)
+
+#5
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista, show.legend = FALSE)) +
+  geom_point(aes(color = traccion)) + 
+  geom_smooth(aes(linetype = traccion), se=FALSE)
+
+#6
+ggplot(data = millas, mapping = aes(x = cilindrada, y = autopista)) +
+  geom_point(aes(fill = traccion), shape = 21, color = "white", size = 2, stroke = 1)
+
+
