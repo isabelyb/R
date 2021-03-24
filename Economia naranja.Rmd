@@ -1,0 +1,53 @@
+---
+title: "Platzi - Economía Naranja"
+author: "Isabelyb"
+date: "March 23, 2021"
+output: html_document
+---
+
+```{r}
+orangeec <- read.csv("/home/isa/Documents/R/orangeec.csv")
+data(orangeec)
+summary(orangeec)
+```
+Parece que hay correlación entre aporte de economía naranja al pib y la tasa de desempleo.
+```{r}
+pairs(orangeec[,6:10])
+```
+```{r}
+library(ggplot2)
+```
+```{r}
+ggplot()+geom_histogram(data=orangeec,
+                aes(x=Internet.penetration...population), fill="red", color="yellow", binwidth = 5)+
+  labs(x="Penetración de internet (%)Población", y="cantidad de paises", title="Penetración de internet en paises latam")
+  
+```
+```{r}
+library(dplyr)
+```
+```{r}
+economy <- mean(orangeec$GDP.PC)
+economy
+```
+```{r}
+orangeec <- orangeec %>%
+mutate(Strong_economy = ifelse(GDP.PC < economy,
+"Por debajo del promedio",
+"Sobre-Arriba promedio"))
+```
+
+```{r}
+ggplot(orangeec,aes(x=Strong_economy,y=Creat.Ind...GDP, fill=Strong_economy))+
+  geom_boxplot(alpha = 0.4)+
+  labs(x='Tipo de país',
+       y='Aporte economia naranja al PIB',
+       title = 'Aporte economia naranja al PIB paises latam con alto y bajo PIB per capita')+
+  theme(legend.position = "none")+
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+```
+
+El boxplot indica que los paises sobre el promedio en pib per cápita, tienen una dispersión mucho mas alta en cuanto a los aportes de la economía naranja al pib del país. Confirmar con desviación estandar.
+

@@ -468,3 +468,7 @@ ggplot(data = diamantes) +
 
 ggplot(data = diamonds) + 
   geom_bar(aes(x = cut, y = ..count.. / sum(..count..), fill = color))
+
+
+#AJUSTES DE POSICIÓN
+
