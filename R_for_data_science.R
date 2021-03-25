@@ -472,3 +472,11 @@ ggplot(data = diamonds) +
 
 #AJUSTES DE POSICIÓN
 
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, colour = corte))
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, fill = corte))
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte, fill = claridad))
