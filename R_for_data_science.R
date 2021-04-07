@@ -480,3 +480,323 @@ ggplot(data = diamantes) +
 
 ggplot(data = diamantes) +
   geom_bar(mapping = aes(x = corte, fill = claridad))
+
+ggplot(data = diamantes, mapping = aes(x = corte, fill = claridad)) +
+  geom_bar(alpha = 1/5, position = "identity")
+
+ggplot(data = diamantes, mapping = aes(x = corte, colour = claridad)) +
+  geom_bar(fill = NA, position = "identity")
+
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista), position = "jitter")
+
+# 3.9 Sistemas de coordenadas
+
+ggplot(data = millas, mapping = aes(x = clase, y = autopista)) +
+  geom_boxplot()
+
+ggplot(data = millas, mapping = aes(x = clase, y = autopista)) +
+  geom_boxplot() +
+  coord_flip()
+
+
+# 4 Flujo de trabajo: conocimientos básicos
+
+1 / 2 * 9
+
+x <- 5 * 4
+
+y <- 5*8*8
+y
+
+este_es_un_nombre_muy_largo <- 12
+este_es_un_nombre_muy_largo
+
+viva_r <- 2 ^ 3
+
+viv_r # Error: object 'viv_r' not found
+
+seq(1, 10)
+
+x <- "Hola, mundo"
+x
+
+(x <- "Hola, mundo") # impresión en la pantalla
+
+(y <- seq(1, 10, length.out = 5))
+
+(y <- seq(1, 10, length.out = 6))
+
+(y <- seq(1, 10, length.out = 4))
+
+mi_variable <- 10
+mi_variable
+
+mi_var <- 10
+mi_var
+
+mi_variable <- 10
+mi_varıable  # 1 en lugar de i
+
+library(tidyverse)
+
+ggplot(data = millas) + 
+  geom_point(mapping = aes(x = cilindrada, y = autopista))
+
+filter(millas, cilindros == 8)
+filter(diamantes, quilate > 3)
+
+# 5 Transformación de datos
+
+library(datos)
+library(ggplot2)
+library(dplyr)
+
+?vuelos
+
+vuelos
+
+View(vuelos)
+
+view(vuelos)
+
+View(diamantes)
+
+View(fligths)
+
+View(nycflights13)
+
+# 5.2 Filtrar filas con filter()
+
+filter(vuelos, mes == 1, dia == 1)
+
+library(datos)
+
+View(vuelos)
+
+View(millas)
+?millas
+
+install.packages("nycflights13")
+library(nycflights13)
+
+View(vuelos)
+
+install.packages("datos")
+
+View(vuelos)
+
+
+
+filter(vuelos, mes == 1, dia == 1)
+
+filter(vuelos, mes == 1)
+
+
+# Guardar el resultado
+
+ene1 <- filter(vuelos, mes == 1, dia == 1)
+ene1
+
+View(ene1)
+
+filter(vuelos, mes == 11 | mes == 12)
+
+filter(vuelos, mes %in% c(11,12))
+
+#vuelos que no se retrasaron (en llegada o partida) en más de dos horas,
+
+filter(vuelos, !(atraso_llegada > 120 | atraso_salida > 120))
+
+filter(vuelos  , atraso_llegada <= 120, atraso_salida <= 120)
+
+NA > 5
+10 == NA
+NA + 10
+NA / 2
+
+is.na(NA)
+
+filter(vuelos, destino == "IAH"| destino == "HOU")
+
+select(vuelos, contains("SALIDA"))
+
+no_cancelado <- vuelos %>% 
+  filter(!is.na(atraso_salida), !is.na(atraso_llegada))
+no_cancelado %>% 
+  group_by(anio, mes, dia) %>% 
+  summarise(media = mean(atraso_salida))
+
+# EDA
+
+# Para examinar la distribución de una variable categórica, se usa un gráfico de barras:
+
+ggplot(data = diamantes) +
+  geom_bar(mapping = aes(x = corte))
+
+# La altura de las barras muestra cuántas observaciones corresponden a cada valor de x
+# dplyr::count()
+
+diamantes %>% 
+  count(corte)
+
+# Para examinar la distribución de una variable continua, se usa un histograma
+
+ggplot(data = diamantes) +
+  geom_histogram(mapping = aes(x = quilate), binwidth = 0.5)
+
+#  dplyr::count() y ggplot2::cut_width()
+
+diamantes %>% 
+  count(cut_width(quilate, 0.5))
+
+# explorar una variedad de distintas medidas para el ancho del intervalo
+# distintas medidas pueden revelar diferentes patrones
+
+pequenos <- diamantes %>% 
+  filter(quilate < 3)
+
+ggplot(data = pequenos, mapping = aes(x = quilate)) +
+  geom_histogram(binwidth = 0.1)
+
+#  sobreponer múltiples histogramas en la misma gráfica, mejor líneas que barras
+
+ggplot(data = pequenos, mapping = aes(x = quilate, colour = corte)) +
+  geom_freqpoly(binwidth = 0.1)
+
+ggplot(data = pequenos, mapping = aes(x = quilate, colour = corte)) +
+  geom_histogram(binwidth = 0.1)
+
+ggplot(data = pequenos, mapping = aes(x = quilate)) +
+  geom_histogram(binwidth = 0.01)
+
+# valores atípicos / outliers
+
+ggplot(diamantes) + 
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5)
+
+#Para facilitar la tarea de visualizar valores inusuales, necesitamos acercar la imagen a los valores más pequeños del eje vertical con coord_cartesian():
+
+ggplot(diamantes) + 
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+  coord_cartesian(ylim = c(0, 50))
+
+inusual <- diamantes %>% 
+  filter(y < 3 | y > 20) %>% 
+  select(precio, x, y, z) %>%
+  arrange(y)
+
+inusual
+
+# 1. Desechar la fila completa donde están los valores inusuales
+
+diamantes2 <- diamantes %>% 
+  filter(between(y, 3, 20))
+
+diamantes2
+
+# 2. reemplazar los valores inusuales con valores faltantes.
+
+diamantes3 <- diamantes %>% 
+  mutate(y = ifelse(y < 3 | y > 20, NA, y))
+
+diamantes3
+
+#diamantes2
+ggplot(data = diamantes2, mapping = aes(x = x, y = y)) + 
+  geom_point()
+
+#diamantes3
+ggplot(data = diamantes3, mapping = aes(x = x, y = y)) + 
+  geom_point()
+
+
+ggplot(data = diamantes2, mapping = aes(x = x, y = y)) + 
+  geom_point(na.rm = TRUE)
+
+
+# 7.5 Covariación: Si la variación describe el comportamiento dentro de una variable, la covariación describe el comportamiento entre variables
+
+ggplot(data = diamantes, mapping = aes(x = precio)) + 
+  geom_freqpoly(mapping = aes(colour = corte), binwidth = 500)
+
+ggplot(diamantes) + 
+  geom_bar(mapping = aes(x = corte))
+
+ggplot(data = diamantes, mapping = aes(x = precio, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = corte), binwidth = 500)
+
+ggplot(data = diamantes, mapping = aes(x = corte, y = precio)) +
+  geom_boxplot()
+
+
+# ordenar para mostrar tendencias
+
+ggplot(data = millas, mapping = aes(x = clase, y = autopista)) +
+  geom_boxplot()
+
+ggplot(data = millas) +
+  geom_boxplot(mapping = aes(x = reorder(clase, autopista, FUN = median), y = autopista))
+
+# girar por nombrese largos
+
+
+ggplot(data = millas) +
+  geom_boxplot(mapping = aes(x = reorder(clase, autopista, FUN = median), y = autopista)) +
+  coord_flip()
+
+
+# Dos variables categóricas
+
+ggplot(data = diamantes) +
+  geom_count(mapping = aes(x = corte, y = color))
+
+  # calcular el recuento con dplyr:
+
+diamantes %>% 
+  count(color, corte)
+
+   #  visualizar con geom_tile() y adaptar la estética de relleno (fill):
+
+diamantes %>% 
+  count(color, corte) %>%  
+  ggplot(mapping = aes(x = color, y = corte)) +
+  geom_tile(mapping = aes(fill = n))
+
+install.packages("heatmaply")
+
+diamantes %>% 
+  count(color, corte) %>%  
+  ggplot(mapping = aes(x = color, y = corte)) +
+  geom_tile(mapping = aes(fill = n))
+
+
+#  Dos variables continuas
+
+ggplot(data = diamantes) +
+  geom_point(mapping = aes(x = quilate, y = precio))
+
+
+  # muchos datos, agregar transpaarencia
+
+ggplot(data = diamantes) + 
+  geom_point(mapping = aes(x = quilate, y = precio), alpha = 1 / 100)
+
+install.packages("hexbin")
+
+ggplot(data = pequenos) +
+  geom_bin2d(mapping = aes(x = quilate, y = precio))
+
+ggplot(data = pequenos) +
+  geom_hex(mapping = aes(x = quilate, y = precio))
+
+ggplot(data = pequenos, mapping = aes(x = quilate, y = precio)) + 
+  geom_boxplot(mapping = aes(group = cut_width(quilate, 0.1)))
+
+ggplot(data = pequenos, mapping = aes(x = quilate, y = precio)) + 
+  geom_boxplot(mapping = aes(group = cut_number(quilate, 20)))
+
+# Patrones y modelos
+
+ggplot(data = faithful) +
+  geom_point(mapping = aes(x = eruptions, y = waiting))
