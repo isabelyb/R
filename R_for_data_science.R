@@ -800,3 +800,6 @@ ggplot(data = pequenos, mapping = aes(x = quilate, y = precio)) +
 
 ggplot(data = faithful) +
   geom_point(mapping = aes(x = eruptions, y = waiting))
+
+# FLUJO DE TRABAJO EN R
+
